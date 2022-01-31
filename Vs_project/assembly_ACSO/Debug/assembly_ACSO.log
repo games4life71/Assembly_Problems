@@ -1,0 +1,6 @@
+﻿  assembly_ACSO.cpp
+D:\Projects\assembly_ACSO\assembly_ACSO\assembly_ACSO.cpp(107,8): warning C4102: 'afara_loop1': unreferenced label
+D:\Projects\assembly_ACSO\assembly_ACSO\assembly_ACSO.cpp(111,17): warning C4102: 'afara_loop2': unreferenced label
+D:\Projects\assembly_ACSO\assembly_ACSO\assembly_ACSO.cpp(189,9): warning C4101: 'count': unreferenced local variable
+D:\Projects\assembly_ACSO\assembly_ACSO\assembly_ACSO.cpp(262,16): warning C4244: 'return': conversion from 'double' to 'unsigned int', possible loss of data
+  assembly_ACSO.vcxproj -> D:\Projects\assembly_ACSO\Debug\assembly_ACSO.exe
