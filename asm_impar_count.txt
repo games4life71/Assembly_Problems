@@ -1,0 +1,42 @@
+int a; 
+    int v[] = { 1, 1, 1 ,101 , 12  }; 
+    int siz = sizeof(v) / sizeof(v[0]);
+    int count;
+
+    int  i;
+    
+    _asm{
+        //numarul de elemente impare dintr un vector 
+
+        mov i , 0 
+        mov count , 0
+        lea edi , v 
+
+        bucla : 
+        mov ecx , i
+           cmp ecx , siz 
+            jge afara_loop 
+             
+            mov eax , dword ptr [edi + ecx *4]  //testare daca element este impar prin impartirea la 2 
+            mov edx , 0   
+            mov ebx ,  2 
+            div ebx 
+            cmp edx, 0  //verificare daca restul este 0 sau 1 
+            jne impar 
+            
+            
+            inc i  //restul este 0 , deci numarul nu este impar 
+             jmp bucla
+                
+
+
+        impar:    //restul este 1 , deci numarul este impar 
+          inc count 
+          inc i 
+          jmp bucla 
+
+
+
+            afara_loop: 
+    }
+    cout << count;

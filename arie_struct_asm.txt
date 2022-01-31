@@ -1,0 +1,42 @@
+unsigned radical(unsigned x)
+{
+    return sqrt(x);
+}
+
+unsigned aria(triunghi* t)
+{
+
+
+    //functie care calculeaza aria unui triunghi folosind formula lui  Heron 
+     
+    _asm {
+        mov edi, [ebp + 8] //pointer la inceputul struct ului 
+          //calculam semiperimetru 
+          mov eax, 0
+          add eax, dword ptr[edi]
+          add eax, dword ptr[edi + 4]
+          add eax, dword ptr[edi + 8]
+          mov edx, 0
+          mov ecx, 2
+          div ecx  // in eax se afla semiperimetru 
+
+          // p(p-a)(p-b)(p-c)
+          mov ebx , eax // in ebx se afla acum semiperimetru 
+          mov ecx, ebx 
+          sub ecx, dword ptr[edi]  // ....   p-a 
+           
+           mul ecx 
+
+           mov ecx , ebx 
+           sub ecx , dword ptr [edi+4]
+           mul ecx 
+           mov ecx , ebx  
+           sub ecx , dword ptr [edi + 8]
+           mul ecx 
+
+            // apelam sqrt 
+            push eax 
+            call radical
+            add esp  , 4
+
+    }

@@ -1,0 +1,48 @@
+int reverse_asm(int* v1, int* v2, int n)
+{
+    //verifica daca vectorii sunt invers pusi 
+    _asm {
+
+
+        mov edi , v1 // pointer la primul vector 
+        mov esi , v2  //pointer la al doilea vector 
+
+        mov ecx , 0 //contor --- i 
+         bucla_for: 
+          mov eax , ecx
+          mov ebx , [ebp +16 ]  // n ul 
+          cmp eax , ebx     
+          je afara_loop 
+
+              //nu sunt egale si interam 
+              mov eax , [edi + 4*ecx] //elementu din v1
+              //trb sa retin n-1 
+              sub ebx , ecx 
+              dec ebx 
+              mov edx , [esi + 4*ebx ] //elementu din v2
+              cmp eax , edx 
+              jne not_equal 
+                //sunt egale si continuam 
+                inc ecx // increment i 
+                jmp bucla_for
+
+
+              afara_loop :
+  
+             mov eax , 1 
+            jmp afara_de_tot
+
+
+      not_equal:
+          mov eax , 0 //fals ca nu sunt egale 
+          //nu sunt egale 
+
+    afara_de_tot:
+
+    }
+
+
+
+
+
+}

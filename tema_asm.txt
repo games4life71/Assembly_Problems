@@ -1,0 +1,136 @@
+int main()
+{
+    
+       int v[] = { 10, 10 ,10 ,4 ,5 , 7 };
+       int i;
+       int maxim;
+       int siz = sizeof(v) / sizeof(v[0]);
+       int sum, medie;
+       int count;
+       int ok = true;
+       int result_prob1 = 0;
+       int result_prob2 = 0;
+       int result_prob3 = 0;
+
+
+       _asm {
+             //PROBLEMA 3 
+           mov i, 0
+           mov maxim, 0
+           lea edi, v
+
+           bucla_prob3 :
+           mov ecx, i
+               mov edx, siz
+               cmp ecx, edx
+               jge afara_loop3
+
+               //comparare element curent cu maxim
+               mov ecx, i
+               mov edx, maxim
+               mov eax, dword ptr[edi + 4 * ecx]
+               cmp eax, edx
+               jg  bigger
+               //mai mic  
+               inc i
+               jmp bucla_prob3
+
+               bigger :
+           mov maxim, eax
+               inc i
+               jmp bucla_prob3
+
+               afara_loop3 :
+           mov eax, maxim
+            mov result_prob3 , eax 
+
+
+     //PROBLEMA 1 
+                 //suma elementelor dintr un vector
+               lea edi, v //plasare in registrul edi adresa de inceput a lui v 
+               mov i, 0
+               mov sum, 0   //initializare cu 0 fiecare variabila 
+               mov medie, 0
+
+               bucla_loop1 :
+           mov ecx, i
+               mov edx, siz
+               cmp ecx, edx     //conditia de stop si saltul  in exterior daca e indeplinita 
+               jge afara_loop1
+
+               mov ebx, dword ptr[edi + ecx * 4]
+               add sum, ebx     //adunarea elementului la suma 
+
+
+
+               inc i
+               jmp bucla_loop1  //intoarcerea in loop 
+
+               afara_loop1 :
+
+           //calculare medie 
+
+           mov eax, sum
+               mov edx, 0
+               mov ecx, i
+               div ecx
+               mov result_prob1, eax
+                
+
+               //PROBLEMA 2 
+
+               //numarul de elemente impare dintr un vector 
+
+               mov i, 0
+               mov count, 0
+               lea edi, v
+
+               bucla2 :
+           mov ecx, i
+               cmp ecx, siz
+               jge afara_loop2
+
+               mov eax, dword ptr[edi + ecx * 4]  //testare daca element este impar prin impartirea la 2 
+               mov edx, 0
+               mov ebx, 2
+               div ebx
+               cmp edx, 0  //verificare daca restul este 0 sau 1 
+               jne impar
+
+
+               inc i  //restul este 0 , deci numarul nu este impar 
+               jmp bucla2
+
+
+
+           impar:    //restul este 1 , deci numarul este impar 
+           inc count
+               inc i
+               jmp bucla2
+
+
+
+           afara_loop2:
+           mov eax , count
+           mov result_prob2 , eax
+
+
+              
+              
+          
+
+    }
+
+          
+
+
+
+
+       
+
+       printf("Rezultat Prob 1: %X\n", result_prob1);
+       printf("Rezultat Prob 2: %d\n", result_prob2);
+       printf("Rezultat Prob 3: %d\n", result_prob3);
+      
+
+}

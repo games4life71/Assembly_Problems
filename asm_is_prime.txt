@@ -1,0 +1,41 @@
+int is_prime(int)
+{
+     //verficare daca un numar este prim 
+    _asm {
+        mov ecx, dword ptr [ebp + 8] // n ul care trebuie verificat 
+        mov esi, 2 //index ul 
+    bucla :
+        
+        mov ebx , dword ptr [ebp+8] // n ul nostru 
+        shr ebx,1 //impartim la 2 n -ul 
+        cmp esi , ebx 
+        je afara_loop 
+            
+            /
+             
+            mov eax,ecx 
+            mov ebx , esi
+            mov edx ,0
+            div ebx 
+            cmp edx , 0 // comparam restul cu 0 
+            jne increment_next
+             //am gasit un divizor 
+            mov eax ,0
+            jmp iesire_gasit
+            
+
+            increment_next : 
+               inc esi
+               jmp bucla
+
+
+                   afara_loop:
+                    mov eax, 1
+
+               iesire_gasit:
+    }
+
+
+
+
+}

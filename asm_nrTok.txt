@@ -1,0 +1,57 @@
+nt count_words(char*)
+{
+
+    //numara cate cuvinte sunt in vector 
+    //separatori , . si  ' '
+    //"mama a mers la munte,mare.  "1234"
+    _asm {
+        mov edi , [ebp +8 ] // incarcam pointer ul in registrul edi 
+        mov ecx , 0 //contor
+        mov esi , 0 // statutul 0 -- afara din cuvant  -- 1 ---in cuvant 
+        mov eax ,0
+        bucla: 
+         mov bl , byte ptr [edi + ecx * 1 ]
+         cmp bl , 0 // comparam cu null 
+         je afara_loop 
+
+             //vedem daca in bl este separatot 
+             //if (bl == ' ' || bl == ',' || b
+             cmp bl , ','
+             je gasit_separator 
+             cmp bl , '.'
+             je gasit_separator
+             cmp bl , ' '
+             je gasit_separator
+
+             //else if ( state == 0 )
+             cmp esi , 0 //daca este in afara cuvantului si nu este spatiu 
+             je  else_if
+         //daca este in cuvant , incrementam contorul si trecem la urmatorul pas 
+              inc ecx 
+              jmp bucla
+
+             gasit_separator:
+                 mov esi , 0
+                  inc ecx           //statutul  s a schimbat in 0 --in afara cuvantului   
+                 jmp bucla
+
+                     else_if:
+                       //este in afara cuvantului si nu este separator 
+                          inc eax  //incrementam numarul de cuvinte gasite 
+                          mov esi , 1  //este in cuvant    
+                          jmp bucla
+
+             afara_loop :
+
+
+
+
+
+  
+
+    }
+
+
+
+
+}

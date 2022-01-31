@@ -1,0 +1,115 @@
+int is_prime(int)
+{
+     //verficare daca un numar este prim 
+    _asm {
+        mov ecx, dword ptr [ebp + 8] // n ul care trebuie verificat 
+        mov esi, 2 //index ul 
+    bucla :
+        
+        mov ebx , dword ptr [ebp+8] // n ul nostru 
+        shr ebx,1 //impartim la 2 n -ul 
+        cmp esi , ebx 
+        jg afara_loop 
+            
+            
+             
+            mov eax,ecx 
+            mov ebx , esi
+            mov edx ,0
+            div ebx 
+            cmp edx , 0 // comparam restul cu 0 
+            jne increment_next
+             //am gasit un divizor 
+            mov eax ,0
+            jmp iesire_gasit
+            
+
+            increment_next : 
+               inc esi
+               jmp bucla
+
+
+                   afara_loop:
+                    mov eax, 1
+
+               iesire_gasit:
+    }
+
+
+
+
+}
+
+int prime_sum(int[], int)
+{
+
+    _asm {
+
+        mov esi , 0 //suma noastra
+        mov edi , [ebp+8] //pointer la vector 
+        mov ebx , 0 // contorul 
+        bucla : 
+        mov ecx ,[ebp + 12]
+        cmp ebx , ecx 
+        je afara_loop 
+         //verificam daca numarul de pe pozitia curenta este prim sau nu 
+           mov ecx , dword ptr [edi + 4*ebx ]
+            push esi
+            push ebx 
+            push ecx
+
+            call is_prime
+            pop ecx 
+            pop ebx 
+            pop esi
+            //rezultatul se afla in eax 
+            cmp eax, 1 
+            jne not_prime
+              //il adaugam la suma 
+            add esi , dword ptr [edi + 4*ebx ]
+            inc ebx
+            jmp bucla
+
+
+
+        not_prime: 
+         inc ebx 
+         jmp bucla
+
+
+
+
+
+
+
+    afara_loop : 
+           mov eax , esi
+        
+
+         
+    }
+
+    
+}
+
+
+
+int main() {
+
+    int v[] = {2,3,4};
+    int siz = sizeof(v) / sizeof(v[0]);
+    int rez = -1;
+    _asm {
+       lea edi , v 
+       push siz
+       push edi 
+       call prime_sum
+       pop edi 
+       pop siz 
+
+       mov rez , eax 
+       
+
+    }
+    cout << rez;
+}

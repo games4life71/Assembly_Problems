@@ -1,0 +1,56 @@
+int cmmdc(int a, int b)
+{
+
+    //functie care returneaza cmmdc ul  a 2 numere 
+    _asm {
+        mov eax, a
+        mov ebx, b
+
+        //cat timp a sau b diferit de 0 
+         //while(a !=0 && b!=0)
+     bucla:
+            cmp eax, ebx   //conditiile de stop si iesire din functie 
+            je afara 
+
+            //vedem care e mai mare 
+            //if ( a>b)
+
+            cmp eax, ebx
+            jae da
+            //daca a<b -> b=b-a
+            sub ebx , eax 
+            jmp bucla  
+
+          da:    //daca a>b -> a= a-b;
+             sub eax , ebx
+
+            
+
+        jmp bucla
+
+                 afara :
+             mov a , eax 
+    }
+    cout << a;
+    return a;
+}
+
+ 
+ 
+int main()
+{
+    int a, b;
+    cin >> a >> b;
+    _asm
+    {
+
+        push b
+        push a
+       
+        call cmmdc
+        add esp, 8
+        mov a, eax
+    }
+    cout << a;
+    return 0;
+}

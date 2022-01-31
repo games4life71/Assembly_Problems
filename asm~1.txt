@@ -1,0 +1,36 @@
+ //n la puterea k 
+    int n, k;
+    cin >> n >> k;
+    int i;
+
+    _asm {
+
+        mov i, 1
+        
+
+        bucla : 
+            mov ecx, i
+            mov edx, k
+            cmp ecx, edx
+            jge afara_loop 
+
+                mov eax , n
+                mul eax 
+                mov n , eax 
+                inc i
+            
+   jmp bucla
+
+
+
+
+
+
+      afara_loop : 
+
+
+
+    }
+   
+  
+    cout << n;
