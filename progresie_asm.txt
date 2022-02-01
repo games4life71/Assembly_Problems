@@ -1,0 +1,49 @@
+int progresie_arit(int*, int)
+{
+    //functie care returneaza 1 daca numerele formeaza o progresie aritmetica --0 daca nu 
+    _asm {
+        
+        mov edi , [ebp + 8]
+        mov ebx , dword ptr [edi]
+        mov ecx , [edi + 4]
+       sub ecx , ebx  //ratia se afla in ecx 
+       mov esi , ecx  //in esi e ratia  
+       mov eax, 1   
+        bucla_loop : //verificam de la al doilea element pana la ultimul daca ratia este egala pentru toate
+        mov ecx, [ebp + 12] // numarul de elemente 
+         dec ecx
+       cmp eax , ecx 
+       je afara_loop
+
+             mov ebx , dword ptr [ edi + 4*eax ] //n
+             inc eax 
+             mov ecx , dword ptr [edi + 4*eax] //n+1
+             //calculam diferenta dintre ele 
+             sub ecx , ebx 
+              cmp ecx , esi
+               jne not_progresie 
+             //ratia pana acum e buna 
+             
+               jmp bucla_loop
+             
+             
+
+           afara_loop: 
+         mov eax , 1 // vectorul este progresie aritmetica 
+         jmp afara
+
+
+   not_progresie: 
+       mov eax, 0
+
+           afara : 
+            
+
+    }
+
+
+
+
+
+
+}
